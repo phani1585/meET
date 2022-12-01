@@ -1,7 +1,8 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
+import FormComponet from "../components/FormComponet";
 import { userContext } from "../context";
 import { signupValidation } from "../validation/SignupValidation";
 //validation schema
@@ -92,29 +93,7 @@ const SignUp = () => {
   return (
     <Box sx={signup_main_wrapper}>
       <Box sx={signup_wrapper}>
-        <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-          {inputEleArray.map((ele, i) => (
-            <div key={i}>
-              <TextField
-                sx={{ m: 1 }}
-                variant="outlined"
-                value={ele.value}
-                name={ele.name}
-                placeholder={ele.placeholder}
-                onChange={handleChange}
-                fullWidth
-              />
-              {ele.errorMsg && (
-                <Typography sx={{ fontSize: "13px" }} color="error">
-                  {ele.errorMsg}
-                </Typography>
-              )}
-            </div>
-          ))}
-          <Button type="submit" sx={{ m: 1 }} variant="contained" fullWidth>
-            Sign Up
-          </Button>
-        </form>
+        <FormComponet button='Sign Up' inputArray={inputEleArray} handleSubmit={handleSubmit} handleChange={handleChange}/>
         <NavLink to="/login">
           <Typography color="primary" textAlign="right">
             Log in Instead

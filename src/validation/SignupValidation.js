@@ -9,8 +9,8 @@ export const signupValidation = yup.object().shape({
     .string()
     .email("Invalid Email Format")
     .required("This Feild is required !"),
-  userName: yup.string().min(4).required("This Feild is required !"),
-  password: yup.string().min(4).required("This Feild is required !"),
+  userName: yup.string().min(4,'User Name should be atleast 4 characters').required("This Feild is required !"),
+  password: yup.string().min(4,'Password should be atleast 4 characters').required("This Feild is required !"),
   confirmPassword: yup
     .string()
     .required("This Feild is required !")

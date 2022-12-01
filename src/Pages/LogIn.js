@@ -1,9 +1,10 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box,Typography } from "@mui/material";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import FormComponet from "../components/FormComponet";
 import {LoginValidation} from '../validation/LoginValidation'
 
-const { signup_main_wrapper, signup_wrapper,TextFieldMargin,CreateNewAccWrapper } = {
+const { signup_main_wrapper, signup_wrapper,CreateNewAccWrapper } = {
   signup_main_wrapper: {
     display: "flex",
     justifyContent: "center",
@@ -16,9 +17,6 @@ const { signup_main_wrapper, signup_wrapper,TextFieldMargin,CreateNewAccWrapper 
     borderRadius: "10px",
     p: 5,
     backgroundColor: "#fff",
-  },
-  TextFieldMargin:{
-    mb: 1, mt: 1
   },
   CreateNewAccWrapper:{
     display: "flex",
@@ -51,48 +49,24 @@ const LogIn = () => {
       setErrors(errorMsgs)
     }
   };
-  
+
+  const inputEleArray = [
+    {value:user.userName,name:'userName',placeholder:'Enter User Name',errorMsg:errors.userName},
+    {value:user.password,name:'password',placeholder:'Enter Password',errorMsg:errors.password}
+  ]
+
   return (
     <div>
       <Box sx={signup_main_wrapper}>
         <Box sx={signup_wrapper}>
-          <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-            <TextField
-              sx={TextFieldMargin}
-              variant="outlined"
-              value={user.userName}
-              name="userName"
-              placeholder="Enter User Name"
-              onChange={handleChange}
-              fullWidth
-            />
-            {errors.userName && <Typography sx={{fontSize:'13px'}} color="error">{errors.userName}</Typography>}
-            <TextField
-              sx={TextFieldMargin}
-              variant="outlined"
-              value={user.password}
-              name="password"
-              placeholder="Enter Password"
-              onChange={handleChange}
-              fullWidth
-            />
-            {errors.password && <Typography sx={{fontSize:'13px'}} color="error">{errors.password}</Typography>}
-            <Button
-              type="submit"
-              sx={TextFieldMargin}
-              variant="contained"
-              fullWidth
-            >
-              Log In
-            </Button>
-          </form>
+        <FormComponet button='Log In' inputArray={inputEleArray} handleSubmit={handleSubmit} handleChange={handleChange}/>
           <Box sx={CreateNewAccWrapper}>
             <NavLink to="/signup">
               <Typography textAlign="left" color="primary">
                 Create New Account
               </Typography>
             </NavLink>
-            <NavLink to="/signup">
+            <NavLink to="/resetPassword">
               <Typography textAlign="right" color="primary">
                 Forgot Your Password ?
               </Typography>

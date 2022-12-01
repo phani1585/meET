@@ -36,7 +36,7 @@ const SignUp = () => {
 
   const [data, setData] = useState(person);
   const [errors, setErrors] = useState({});
-  const { setUsers } = useContext(userContext);
+  const { setUsers,validtion } = useContext(userContext);
 
   //input Fileds generators
   const inputEleFunc = (name, value, placeholder, errorMsg) => ({
@@ -75,19 +75,8 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const checkErrors = await signupValidation
-      .validate(data, { abortEarly: false })
-      .catch((err) => err);
-    if (checkErrors.inner !== undefined) {
-      const errorMsg = [...checkErrors.inner].reduce((a, b) => {
-        a[b.path] = b.message;
-        return a;
-      }, {});
-      setErrors(errorMsg);
-    } else {
-      setUsers(data);
-      setData(person);
-    }
+      validtion(signupValidation,data).then(errorMsgs=>setErrors(errorMsgs))
+      
   };
 
   return (

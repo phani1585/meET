@@ -32,15 +32,16 @@ const App = () => {
     errorMsg,
   });
 
+
   return (
     <userContext.Provider value={{ setUsers, validtion, inputEleFunc, users }}>
       <BrowserRouter>
         <NavBar />
         <Routes>
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/chatPage" element={<LogIn />} />
+          <Route path="/" element={<LogIn />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
-          <Route path="/" element={<ChatPage />} />
+          <Route path="/chatPage" element={<ChatPage />} />
         </Routes>
       </BrowserRouter>
     </userContext.Provider>

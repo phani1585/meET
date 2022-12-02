@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import FormComponet from "../components/FormComponet";
 import { userContext } from "../Context/context";
 import { signupValidation } from "../validation/SignupValidation";
+import axios from "axios";
 //validation schema
 
 //styling
@@ -69,15 +70,26 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     validtion(signupValidation, data).then((result) => {
       if (result !== undefined) {
         setErrors(result);
       } else {
-        setUsers((prev) => [...prev, data]);
+        let formdata = new FormData();
+        formdata.append("fullName", data.fullName);
+        formdata.append("confirmPassword", data.confirmPassword);
+        formdata.append("email", data.email);
+        formdata.append("password", data.password);
+        formdata.append("userName", data.userName);
+        formdata.append("id",'');
+        console.log(data);
+        axios
+          .post("http://localhost:5000/newLogin", formdata).then(res=>console.log(res))
+          .catch((err) => console.log(err));
         setData(person);
-        navigate("/");
+        // navigate("/");
       }
-    });
+    }); 
   };
 
   return (

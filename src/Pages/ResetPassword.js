@@ -77,7 +77,7 @@ const ResetPassword = () => {
           handleSubmit={handleSubmit}
           handleChange={handleChange}
         />
-        <NavLink to="/login">
+        <NavLink to="/">
           <Typography color="primary" textAlign="right">
             Log in Instead
           </Typography>

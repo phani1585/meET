@@ -27,7 +27,7 @@ const NavBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             MeET
           </Typography>
-          <NavLink to="/login">
+          <NavLink to="/">
             <Button variant="text" color="inherit">
               Log In
             </Button>

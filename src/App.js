@@ -5,9 +5,11 @@ import { userContext } from "./Context/context";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LogIn from "./Pages/LogIn";
 import ResetPassword from "./Pages/ResetPassword";
+import ChatPage from "./Pages/ChatPage";
 
 const App = () => {
   const [users, setUsers] = useState([]);
+  console.log(users);
 
   const validtion = async (schema, data) => {
     const checkErrors = await schema
@@ -31,15 +33,15 @@ const App = () => {
   });
 
   return (
-    <userContext.Provider value={{ setUsers, validtion, inputEleFunc }}>
+    <userContext.Provider value={{ setUsers, validtion, inputEleFunc, users }}>
       <BrowserRouter>
         <NavBar />
         <Routes>
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<LogIn />} />
+          <Route path="/chatPage" element={<LogIn />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/" element={<ChatPage />} />
         </Routes>
-        {console.log(users)}
       </BrowserRouter>
     </userContext.Provider>
   );

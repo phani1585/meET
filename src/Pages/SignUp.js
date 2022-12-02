@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useContext, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import FormComponet from "../components/FormComponet";
 import { userContext } from "../Context/context";
 import { signupValidation } from "../validation/SignupValidation";
@@ -33,7 +33,7 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   };
-
+  const navigate = useNavigate();
   const [data, setData] = useState(person);
   const [errors, setErrors] = useState({});
   const { setUsers, validtion, inputEleFunc } = useContext(userContext);
@@ -75,6 +75,7 @@ const SignUp = () => {
       } else {
         setUsers((prev) => [...prev, data]);
         setData(person);
+        navigate("/");
       }
     });
   };
@@ -88,7 +89,7 @@ const SignUp = () => {
           handleSubmit={handleSubmit}
           handleChange={handleChange}
         />
-        <NavLink to="/login">
+        <NavLink to="/">
           <Typography color="primary" textAlign="right">
             Log in Instead
           </Typography>

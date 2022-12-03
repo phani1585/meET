@@ -12,6 +12,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
+    <UserContextProvider>
       <NavBar />
       <Routes>
         <Route path="/signup" element={<SignUp />} />
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/resetPassword" element={<ResetPassword />} />
         <Route path="/chatPage" element={<ChatPage />} />
       </Routes>
+      </UserContextProvider>
     </BrowserRouter>
   );
 };

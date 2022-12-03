@@ -9,7 +9,7 @@ const FormComponet = (props) => {
           <TextField
             type={props.type || "text"}
             autoFocus={i === 0}
-            sx={{ m: 1 }}
+            sx={{ mt: 1,mb:1 }}
             variant="outlined"
             value={ele.value}
             name={ele.name}
@@ -24,7 +24,7 @@ const FormComponet = (props) => {
           )}
         </div>
       ))}
-      <Button type="submit" sx={{ m: 1 }} variant="contained" fullWidth>
+      <Button type="submit" sx={{ mt: 1,mb:1 }} variant="contained" fullWidth>
         {props.button}
       </Button>
     </form>

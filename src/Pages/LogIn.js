@@ -50,7 +50,7 @@ const LogIn = () => {
   const [warning, setWarning] = useState(false);
 
   const [errors, setErrors] = useState({});
-  const { validtion, inputEleFunc, users } = useContext(userContext);
+  const { validtion, users } = useContext(userContext);
 
   const handleChange = (e) => {
     setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -76,6 +76,14 @@ const LogIn = () => {
       }
     });
   };
+
+  // this func for creating input elements in the form
+  const inputEleFunc = (name, value, placeholder, errorMsg) => ({
+    name,
+    value,
+    placeholder,
+    errorMsg,
+  });
 
   const inputEleArray = [
     inputEleFunc("userName", user.userName, "Enter User Name", errors.userName),

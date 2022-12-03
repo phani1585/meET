@@ -1,11 +1,11 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useContext, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import FormComponet from "../components/FormComponet";
-import { userContext } from "../Context/context";
 import { signupValidation } from "../validation/SignupValidation";
-import axios from "axios";
+// import axios from "axios";
+import { userContext } from "../Context/context";
 //validation schema
 
 //styling
@@ -34,10 +34,18 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   };
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [data, setData] = useState(person);
   const [errors, setErrors] = useState({});
-  const { setUsers, validtion, inputEleFunc } = useContext(userContext);
+  const { validtion } = useContext(userContext);
+
+  // this func for creating input elements in the form
+  const inputEleFunc = (name, value, placeholder, errorMsg) => ({
+    name,
+    value,
+    placeholder,
+    errorMsg,
+  });
 
   //input Fileds generators
   const inputEleArray = [
@@ -70,27 +78,29 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     validtion(signupValidation, data).then((result) => {
       if (result !== undefined) {
         setErrors(result);
       } else {
-        let formdata = new FormData();
-        formdata.append("fullName", data.fullName);
-        formdata.append("confirmPassword", data.confirmPassword);
-        formdata.append("email", data.email);
-        formdata.append("password", data.password);
-        formdata.append("userName", data.userName);
-        formdata.append("id",'');
-        console.log(data);
-        axios
-          .post("http://localhost:5000/newLogin", formdata).then(res=>console.log(res))
-          .catch((err) => console.log(err));
         setData(person);
-        // navigate("/");
       }
-    }); 
+    });
   };
+
+  // let formdata = new FormData();
+  // formdata.append("fullName", data.fullName);
+  // formdata.append("confirmPassword", data.confirmPassword);
+  // formdata.append("email", data.email);
+  // formdata.append("password", data.password);
+  // formdata.append("userName", data.userName);
+  // formdata.append("id", "");
+  // console.log(data);
+  // axios
+  //   .post("http://localhost:5000/newLogin", formdata)
+  //   .then((res) => console.log(res))
+  //   .catch((err) => console.log(err));
+  // setData(person);
+  // navigate("/");
 
   return (
     <Box sx={signup_main_wrapper}>

@@ -1,11 +1,12 @@
-import { Typography,Snackbak } from "@mui/material";
+import { Typography} from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useContext, useState } from "react";
-import { NavLink,useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import FormComponet from "../components/FormComponet";
 import { signupValidation } from "../validation/SignupValidation";
 import { userContext } from "../Context/context";
 import signupConnet from "../assets/signupConnet.jpeg";
+import ErrorMsg from "../components/ErrorMsg";
 
 
 //styling
@@ -48,10 +49,9 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   };
-  const navigate = useNavigate();
   const [data, setData] = useState(person);
   const [errors, setErrors] = useState({});
-  const { validtion,inputEleFunc,axiosCall,sucssesMsg,setSucssesMsg } = useContext(userContext);
+  const { validtion,inputEleFunc,postCall,sucssesMsg } = useContext(userContext);
 
   // this func for creating input elements in the form
 
@@ -98,8 +98,8 @@ const SignUp = () => {
       if (result !== undefined) {
         setErrors(result);
       } else {
-        await axiosCall(data,BASE_URL,'post')
-        setData(person);
+        await postCall(data,BASE_URL,'post')
+        if(sucssesMsg.message==='User created')setData(person)
       }
     });
   };
@@ -107,8 +107,7 @@ const SignUp = () => {
   return (
     <Box sx={signup_main_wrapper}>
       <Box sx={signup_wrapper}>
-        {sucssesMsg.message!=='' && <Snackbak open={sucssesMsg.openSnackBar} autoHideDuration={6000} onClose={()=>setSucssesMsg({message:'',
-        openSnackBar:false})} message={sucssesMsg.message} action={action}/>}
+        {sucssesMsg.message!=='' ? <ErrorMsg msg={sucssesMsg.message}/>:null}
         <FormComponet
           button="Sign Up"
           inputArray={inputEleArray}
@@ -117,9 +116,11 @@ const SignUp = () => {
         />
         <NavLink to="/">
           <Typography color="primary" textAlign="right">
-            Log in Instead
+            Go to Home 
+            {/*TODO : This should Update */}
           </Typography>
         </NavLink>
+        
       </Box>
       <Box sx={LogInLogo}>
         <img style={{ width: "100%" }} src={signupConnet} alt="log in logo" />

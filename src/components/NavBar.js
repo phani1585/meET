@@ -10,7 +10,13 @@ import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
 
+
 const NavBar = () => {
+
+  // const {}=useContext(userContext)
+
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky">

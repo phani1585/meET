@@ -9,6 +9,7 @@ export const UserContextProvider = ({ children }) => {
         openSnackBar:false
     })
 
+
   const validtion = async (schema, data) => {
     const checkErrors = await schema
       .validate(data, { abortEarly: false })
@@ -30,10 +31,8 @@ export const UserContextProvider = ({ children }) => {
     type
   });
 
-  const axiosCall = (data,BASE_URL,Request_type) => {
+  const postCall = (data,BASE_URL) => {
     let formdata = new FormData();
-    console.log(data,'from axios',BASE_URL,'url')
-    if(Request_type==='post'){
         formdata.append("fullName", data.fullName);
         formdata.append("email", data.email);
         formdata.append("password", data.password);
@@ -43,17 +42,12 @@ export const UserContextProvider = ({ children }) => {
           .post(BASE_URL, formdata)
           .then((res) => setSucssesMsg({openSnackBar:true,message:res.data.msg,}))
           .catch((err) => alert(err));
-    }else{
-        axios
-        .post(BASE_URL, formdata)
-        .then((res) => setSucssesMsg(res.data.data.msg))
-        .catch((err) => alert(err));
-    }
-
   }
 
+
+
   return (
-    <userContext.Provider value={{ validtion,axiosCall,inputEleFunc,sucssesMsg,setSucssesMsg }}>
+    <userContext.Provider value={{ validtion,inputEleFunc,sucssesMsg,postCall }}>
       {children}
     </userContext.Provider>
   );

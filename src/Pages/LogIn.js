@@ -1,10 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import React, { useContext, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import FormComponet from "../components/FormComponet";
 import { userContext } from "../Context/context";
+import {authContext} from '../Context/AuthContext'
 import { LoginValidation } from "../validation/LoginValidation";
 import ConnectedImage from "../assets/Connected world-rafiki.png";
+import ErrorMsg from "../components/ErrorMsg";
 
 const { signup_main_wrapper, signup_wrapper, CreateNewAccWrapper, LogInLogo } =
   {
@@ -40,39 +42,32 @@ const { signup_main_wrapper, signup_wrapper, CreateNewAccWrapper, LogInLogo } =
     },
   };
 
+  const BASE_URL = "http://192.168.15.124:3080/chat/login"
+
 const LogIn = () => {
   const person = {
     userName: "",
     password: "",
   };
-  const navigate = useNavigate();
-  const [user, setUser] = useState(person);
-  const [warning, setWarning] = useState(false);
-
+  const [data, setData] = useState(person);
   const [errors, setErrors] = useState({});
-  const { validtion, users,inputEleFunc } = useContext(userContext);
+  const { validtion,inputEleFunc} = useContext(userContext);
+  const { getCall,errMsg,logIn } = useContext(authContext);
 
   const handleChange = (e) => {
-    setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
-    validtion(LoginValidation, user).then((result) => {
+    validtion(LoginValidation, data).then(async(result) => {
       if (result !== undefined) {
         setErrors(result);
       } else {
-        let checkUser = users.filter(
-          (ele) =>
-            ele.userName === user.userName && ele.password === user.password
-        );
-        if (checkUser.length > 0) {
-          setUser(person);
-          navigate("/chatPage");
-        } else {
-          setWarning(true);
-        }
+        await getCall(data,BASE_URL,'post')
+        setData(person)
+        logIn()
       }
     });
   };
@@ -80,16 +75,14 @@ const LogIn = () => {
   // this func for creating input elements in the form
 
   const inputEleArray = [
-    inputEleFunc("userName", user.userName, "Enter User Name", errors.userName,'text'),
-    inputEleFunc("password", user.password, "Enter Password", errors.password,'text'),
+    inputEleFunc("userName", data.userName, "Enter User Name", errors.userName,'text'),
+    inputEleFunc("password", data.password, "Enter Password", errors.password,'text'),
   ];
 
   return (
     <Box sx={signup_main_wrapper}>
       <Box sx={signup_wrapper}>
-        {warning && (
-          <Typography color="error">Invalid User Name or Password</Typography>
-        )}
+        {errMsg!==null ? <ErrorMsg msg={errMsg}/>:null}
         <FormComponet
           button="Log In"
           inputArray={inputEleArray}

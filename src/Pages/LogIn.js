@@ -65,9 +65,11 @@ const LogIn = () => {
       if (result !== undefined) {
         setErrors(result);
       } else {
-        await getCall(data,BASE_URL,'post')
+        let login= await getCall(data,BASE_URL);
         setData(person)
-        logIn()
+        logIn(
+
+        )
       }
     });
   };

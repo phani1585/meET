@@ -7,6 +7,9 @@ import LogIn from "./Pages/LogIn";
 import ResetPassword from "./Pages/ResetPassword";
 import ChatPage from "./Pages/ChatPage";
 import { AuthContexProvider } from "./Context/AuthContext";
+import RequireAuth from "./components/RequireAuth";
+import TextTool from "./Pages/TextTool";
+import { ImageToText } from "./Pages/imageToText";
 
 const App = () => {
 
@@ -17,9 +20,15 @@ const App = () => {
         <NavBar />
         <Routes>
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/" element={<LogIn />} />
+          <Route path="/Login" element={<LogIn />} />
+          <Route path="/" element={<ImageToText />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
-          <Route path="/chatPage" element={<ChatPage />} />
+          <Route path="/textTool" element={<TextTool />} />
+          <Route path='/chatPage' element={<RequireAuth><ChatPage/></RequireAuth>}/>
+          <Route path='/chatPage' element={<RequireAuth><ChatPage/></RequireAuth>}/>
+          {/* <Route path="/chatPage" element={<ChatPage />} > */}
+
+          
         </Routes>
       </AuthContexProvider>
       </UserContextProvider>

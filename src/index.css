@@ -16,3 +16,22 @@ a:-webkit-any-link{
   color: #fff;
   font-weight: 700;
 }
+
+pre{
+  font-family: 'Roboto', sans-serif;
+  min-height: 500px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+::-moz-selection { 
+  /* Code for Firefox */
+  color: rgb(255, 255, 255);
+  background: rgb(0, 0, 0);
+}
+
+::selection {
+  color: rgb(255, 255, 255);
+  background: rgb(0, 0, 0);
+}

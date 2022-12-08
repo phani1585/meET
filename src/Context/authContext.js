@@ -7,17 +7,17 @@ export const authContext = createContext(null)
 
 
 export const AuthContexProvider = ({children}) => {
-    const [user,setUser]=useState(null)
-    const [dataFromApi,setDataFromApi]=useState(null)
+    const [user,setUser]=useState({})
+    const [dataFromApi,setDataFromApi]=useState({})
     const [errMsg,setErrMsg]=useState(null)
     const navigate = useNavigate();
 
     console.log(user,'user');
 
     const logIn = () => {
-        setUser(dataFromApi)
-        setErrMsg(null)
-        navigate("/chatPage");
+        // setUser(dataFromApi)
+        setErrMsg(null);
+        navigate('/chatPage');
     }
 
     const logOut = () => {
@@ -34,21 +34,25 @@ export const AuthContexProvider = ({children}) => {
         formdata.append("userName", data.userName);
         formdata.append("password", data.password);
         formdata.append("id", "");
-            axios
+           axios
             .post(BASE_URL, formdata)
-            .then((res) => {
+            .then(async(res) => {
               console.log(res);
-              if(res.data.data){
-                setDataFromApi(res.data.data)
+              // return res;
+             if(res.data.data){
+               await  setUser(res.data.data)
               }
-               setErrMsg(res.data.msg)
+              else{
+                setErrMsg(res.data.msg)
+              } 
+               
               })
             .catch((err) => alert(err));
       }
 
 
   return (
-    <authContext.Provider value={{getCall,logIn,logOut,errMsg}}>
+    <authContext.Provider value={{getCall,logIn,logOut,errMsg,user}}>
       {children}
     </authContext.Provider>
   )
